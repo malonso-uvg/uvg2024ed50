@@ -3,7 +3,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class Calculadora1Test {
-    ICalculator miCalc = new Calculadora1();
+    ICalculator miCalc = new Calculadora2();
 
     @Test
     public void testAdd() {
