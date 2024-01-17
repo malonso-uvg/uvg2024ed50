@@ -6,15 +6,19 @@ public class Calculadora2 implements ICalculator{
     }
 
     @Override
-    public int mult(int n1, int n2) {
-       int resultado = 0;
+    public int mult(int a, int b) {
+        int resultado = 0;
+        int signo = (a < 0 ^ b < 0) ? -1 : 1; // Determinar el signo del resultado
+
+        a = Math.abs(a);
+        b = Math.abs(b);
 
         // Utilizar un bucle para sumar 'a' a 'resultado' 'b' veces
-        for (int i = 0; i < n2; i++) {
-            resultado += n1;
+        for (int i = 0; i < b; i++) {
+            resultado += a;
         }
 
-        return resultado;
+        return resultado * signo;
     }
     
 }
