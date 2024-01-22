@@ -3,7 +3,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class Calculadora1Test {
-    ICalculator miCalc = new Calculadora2(); //Aca pruebo ambas calculadoras solo cambiar la clase
+    ICalculator miCalc = new Calculadora1(); //Aca pruebo ambas calculadoras solo cambiar la clase
 
     @Test
     public void testAdd() {
