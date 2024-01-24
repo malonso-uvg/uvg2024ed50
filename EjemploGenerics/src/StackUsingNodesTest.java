@@ -6,7 +6,7 @@ public class StackUsingNodesTest {
 
     @Test
     public void testCount() {
-        StackUsingNodes miStack = new StackUsingNodes();
+        StackUsingNodes<Integer> miStack = new StackUsingNodes<Integer>();
         assertEquals(0, miStack.count());
         miStack.push(30);
         assertEquals(1, miStack.count());
@@ -16,7 +16,7 @@ public class StackUsingNodesTest {
 
     @Test
     public void testIsEmpty() {
-        StackUsingNodes miStack = new StackUsingNodes();
+        StackUsingNodes<Integer> miStack = new StackUsingNodes<Integer>();
         assertEquals(true, miStack.isEmpty());
         miStack.push(30);
         assertEquals(false, miStack.isEmpty());
@@ -26,31 +26,31 @@ public class StackUsingNodesTest {
 
     @Test
     public void testPeek() {
-        StackUsingNodes miStack = new StackUsingNodes();
+        StackUsingNodes<Integer> miStack = new StackUsingNodes<Integer>();
         miStack.push(30);
-        assertEquals(30, miStack.peek());
-        assertEquals(30, miStack.peek());
+        assertEquals(30, (int)miStack.peek());
+        assertEquals(30, (int)miStack.peek());
     }
 
     @Test
     public void testPop() {
-        StackUsingNodes miStack = new StackUsingNodes();
+        StackUsingNodes<Integer> miStack = new StackUsingNodes<Integer>();
         miStack.push(30);
-        assertEquals(30, miStack.pop());
+        assertEquals(30, (int)miStack.pop());
         miStack.push(35);
         miStack.push(50);
-        assertEquals(50, miStack.pop());
-        assertEquals(35, miStack.pop());
+        assertEquals(50, (int)miStack.pop());
+        assertEquals(35, (int)miStack.pop());
     }
 
     @Test
     public void testPush() {
-        StackUsingNodes miStack = new StackUsingNodes();
-        miStack.push(30);
-        assertEquals(30, miStack.pop());
-        miStack.push(35);
-        miStack.push(50);
-        assertEquals(50, miStack.pop());
-        assertEquals(35, miStack.pop());
+        StackUsingNodes<String> miStack = new StackUsingNodes<String>();
+        miStack.push("hola");
+        assertEquals("hola", miStack.pop());
+        miStack.push("estudiantes");
+        miStack.push("UVG EDS50");
+        assertEquals("UVG EDS50", miStack.pop());
+        assertEquals("estudiantes", miStack.pop());
     }
 }

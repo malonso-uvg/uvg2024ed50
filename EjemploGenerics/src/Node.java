@@ -1,9 +1,9 @@
-public class Node {
-    public int value;
+public class Node<T> {
+    public T value;
 
-    public Node next; 
+    public Node<T> next; 
 
-    public Node(int _value){
+    public Node(T _value){
         value = _value;
         next = null;
     }
