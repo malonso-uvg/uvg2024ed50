@@ -111,7 +111,43 @@ public class Interpreter {
 	    Integer total = 0;
 	    
 	    while (matcher.find()) {
-	    	total += Integer.parseInt(matcher.group().trim());
+			try {
+				int sumando = Integer.parseInt(matcher.group().trim());
+				total  = total + sumando;
+			} catch(NumberFormatException e){ //Significa que viene una variable
+				//Verifico si la variable existe o no
+				String variable = matcher.group().trim();
+
+				//Si existe entonces uso su valor
+				if (myVars.get(variable) != null){ //Existe
+					int sumando = myVars.get(variable);
+					total  = total + sumando;
+				} else { //No existe
+
+
+					//Using anonymous Inner class
+					IOperationResult errorResult = new IOperationResult() {
+
+						
+						@Override
+						public void performOperation() {
+							System.out.println("ERROR: variable " + variable + " No encontrada");
+							
+						}
+
+						@Override
+						public void addResults(String key, String result) {
+							// TODO Auto-generated method stub
+						}
+						
+					};
+					return errorResult;
+
+
+				}
+
+			}
+	    	
 	    }
 	    
 	    AritmethicOperationResult miResult = new AritmethicOperationResult();
@@ -123,9 +159,17 @@ public class Interpreter {
 		Pattern pattern = Pattern.compile("([a-z]+|[0-9]+)", Pattern.CASE_INSENSITIVE); //
 	    Matcher matcher = pattern.matcher(expresion);
 	    Integer total = 0;
+		int count = 0;
 	    
 	    while (matcher.find()) {
-	    	total += Integer.parseInt(matcher.group().trim());
+
+			if (count == 0){
+				total = Integer.parseInt(matcher.group().trim());
+			} else {
+				total = total - Integer.parseInt(matcher.group().trim());
+			}
+			count++;
+	    	
 	    }
 	    
 	    AritmethicOperationResult miResult = new AritmethicOperationResult();
