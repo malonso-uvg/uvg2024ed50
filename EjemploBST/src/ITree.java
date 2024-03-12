@@ -2,7 +2,7 @@ public interface ITree<K, V>{
 
     void insert(K key, V value);
 
-    V find(K key);
+    V find(K keyToFind);
 
     int count();
 
@@ -10,9 +10,9 @@ public interface ITree<K, V>{
 
     V remove(K key);
 
-    void Infix(IWalk walk);
+    void InOrderWalk(IWalk<V> walk);
 
-    void Prefix(IWalk walk);
+    void PreOrderWalk(IWalk<V> walk);
 
-    void Posfix(IWalk walk);
+    void PostOrderWalk(IWalk<V> walk);
 }

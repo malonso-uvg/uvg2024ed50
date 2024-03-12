@@ -19,11 +19,11 @@ public class BinarySearchTree<K, V> implements ITree<K, V> {
             this.root = newNode;
             this.count++;
         } else { //Insert in a leaf
-            privateInsert(this.root, newNode);
+            internalInsert(this.root, newNode);
         }
     }
 
-    private void privateInsert(TreeNode<K,V> parent, TreeNode<K,V> node){
+    private void internalInsert(TreeNode<K,V> parent, TreeNode<K,V> node){
         if (parent != null){
             //0 si K del parent y K del node son iguales
             //-1 si K del node es menor a K del parent
@@ -34,23 +34,43 @@ public class BinarySearchTree<K, V> implements ITree<K, V> {
                     parent.setRight(node);
                     this.count++;
                 } else {
-                    privateInsert(parent.getRight(), node);
+                    internalInsert(parent.getRight(), node);
                 }
             } else if (result < 0){ //-1 si K del node es menor a K del parent por lo tanto se va a la izquierda
                 if (parent.getLeft() == null){ //PUedo insertarlo a la derecha
                     parent.setLeft(node);
                     this.count++;
                 } else {
-                    privateInsert(parent.getLeft(), node);
+                    internalInsert(parent.getLeft(), node);
                 }
             }
         }
     }
 
     @Override
-    public V find(K key) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'find'");
+    public V find(K keyToFind) {
+        if (!isEmpty()){
+            return internalSearch(root, keyToFind);
+        } else {
+            return null;
+        }
+    }
+
+    private V internalSearch(TreeNode<K, V> actualNode, K keyToFind){
+        
+        if (actualNode != null){
+            //Comparar la llave del nodo actual con el valor buscado
+            int result = this.keyComparator.compare(keyToFind, actualNode.getKey());
+            if (result == 0){ //La llave buscada y la llave del nodo son iguales, devuelvo el valor
+                return actualNode.getValue();
+            } else if (result > 0){ //La llave a buscar es mayor a la llave del nodo, me voy a la derecha
+                return internalSearch(actualNode.getRight(), keyToFind);
+            } else if (result < 0){ //La llave a buscar es menor, por lo tanto me muevo a la izquierda
+                return internalSearch(actualNode.getLeft(), keyToFind);
+            }
+        }
+
+        return null; //if the node is null hen the K was not found
     }
 
     @Override
@@ -70,21 +90,48 @@ public class BinarySearchTree<K, V> implements ITree<K, V> {
     }
 
     @Override
-    public void Infix(IWalk walk) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'Infix'");
+    public void InOrderWalk(IWalk<V> walk) {
+        InternalInOrderWalk(root, walk);
+    }
+
+    private void InternalInOrderWalk(TreeNode<K, V> actualNode, IWalk<V> walk){
+        if (actualNode != null){
+            InternalInOrderWalk(actualNode.getLeft(), walk);
+
+            walk.doWalk(actualNode.getValue());
+
+            InternalInOrderWalk(actualNode.getRight(), walk);
+        }
     }
 
     @Override
-    public void Prefix(IWalk walk) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'Prefix'");
+    public void PreOrderWalk(IWalk<V> walk) {
+        InternalPreOrderWalk(root, walk);
+    }
+
+    private void InternalPreOrderWalk(TreeNode<K, V> actualNode, IWalk<V> walk) {
+        if (actualNode != null){
+            walk.doWalk(actualNode.getValue());
+
+            InternalPreOrderWalk(actualNode.getLeft(), walk);
+
+            InternalPreOrderWalk(actualNode.getRight(), walk);
+        }
     }
 
     @Override
-    public void Posfix(IWalk walk) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'Posfix'");
+    public void PostOrderWalk(IWalk<V> walk) {
+        InternalPostOrderWalk(root, walk);
+    }
+
+    private void InternalPostOrderWalk(TreeNode<K, V> actualNode, IWalk<V> walk) {
+        if (actualNode != null){
+            InternalPostOrderWalk(actualNode.getLeft(), walk);
+
+            InternalPostOrderWalk(actualNode.getRight(), walk);
+
+            walk.doWalk(actualNode.getValue());
+        }
     }
     
 }
