@@ -78,6 +78,20 @@ public class ProgramUI{
     }
 
     public static void main(String[] args) {
+
+        System.out.println("Seleccione el tipo de mapa");
+        Scanner in = new Scanner(System.in);
+        MapFactory<Integer, String> fabricaMap = new MapFactory<Integer, String>();
+        MapFactory<Integer, ArrayList<String>> fabricaMapRepetidos = new MapFactory<Integer, ArrayList<String>>();
+
+        System.out.println("1. HashMap");
+        System.out.println("2. Tree");
+        System.out.println("3. LinkedHashMap");
+        int option = Integer.parseInt(in.nextLine());
+        AbstractMap<Integer, String> dictionary = fabricaMap.getMapInstance( option );
+        AbstractMap<Integer, ArrayList<String>> repetidos = fabricaMapRepetidos.getMapInstance( option );
+
+
         JSONParser parser = new JSONParser();
 
         try (FileReader reader = new FileReader("res/NombresTest.json")) {
@@ -95,10 +109,29 @@ public class ProgramUI{
                 long id = (long) jsonObject.get("id");
                 String nombre = (String) jsonObject.get("nombre");
 
-                // Imprimiendo los valores
-                System.out.println("ID: " + id);
-                System.out.println("Nombre: " + nombre);
-                System.out.println();
+                dictionary.put(Integer.parseInt("" + id), nombre);
+
+                //Logica para los repetidos
+                if (repetidos.get(Integer.parseInt("" + id)) == null){ //La llave no existe
+                    ArrayList<String> nuevoRepetido = new ArrayList<String>();
+                    nuevoRepetido.add(nombre);
+                    repetidos.put(Integer.parseInt("" + id), nuevoRepetido);
+                } else {
+                    repetidos.get(Integer.parseInt("" + id)).add(nombre);
+                }
+            }
+
+            System.out.println("Contenido del HashMap:");
+            for (Integer id : dictionary.keySet()) {
+                System.out.println("ID: " + id + ", Nombre: " + dictionary.get(id));
+            }
+
+            System.out.println("Contenido del HashMap de Repetidos:");
+            for (Integer id : repetidos.keySet()) {
+                for (String name : repetidos.get(id)){
+                    System.out.println("ID: " + id + ", Nombre: " + name);
+                }
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
