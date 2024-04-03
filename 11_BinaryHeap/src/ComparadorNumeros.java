@@ -15,9 +15,9 @@ public class ComparadorNumeros<Integer> implements Comparator<Integer> {
 		if ((int)o1 == (int)o2)
 			return 0;
 		else if ((int)o1 > (int)o2)
-			return -1;
-		else 
 			return 1;
+		else 
+			return -1;
 	}
 
 }

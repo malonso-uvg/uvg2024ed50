@@ -24,4 +24,24 @@ class IterativeHeapTest {
 		
 	}
 
+	@Test
+	void test_Automoviles() {
+		ComparadorCadenas<String> ComparaCadena = new ComparadorCadenas<String>();
+		HeapUsingIterativeBinaryTree<String, Automovil> myHeap = new HeapUsingIterativeBinaryTree<String, Automovil>(ComparaCadena);
+
+		myHeap.Insert("P655HCC", new Automovil("Toyota", 2000));
+		myHeap.Insert("C773BCC", new Automovil("Hino", 1995));
+		myHeap.Insert("M345DGG", new Automovil("Yamaha", 2008));
+
+		//assertEquals("Auto marca: Toyota modelo 2000", myHeap.remove().toString());
+		//assertEquals("Auto marca: Yamaha modelo 2008", myHeap.remove().toString());
+		//assertEquals("Auto marca: Hino modelo 1995", myHeap.remove().toString());
+		assertEquals("Auto marca: Hino modelo 1995", myHeap.remove().toString());
+		assertEquals("Auto marca: Yamaha modelo 2008", myHeap.remove().toString());
+		assertEquals("Auto marca: Toyota modelo 2000", myHeap.remove().toString());
+		
+		
+		
+	}
+
 }
